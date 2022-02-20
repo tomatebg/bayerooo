@@ -1,5 +1,7 @@
 # bayerooo
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/6461a0ef-22ed-43a4-9718-416f4f84bb4c/deploy-status)](https://app.netlify.com/sites/nifty-blackwell-fe4665/deploys)
+
 ## Build Setup
 
 ```bash
