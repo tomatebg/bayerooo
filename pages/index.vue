@@ -17,6 +17,18 @@ export default {
   data() {
     return {}
   },
+  head() {
+    return {
+      title: 'Hoje é domingo?',
+      meta: [
+        {
+          hid: 'Verificador se o dia de hoje é um domingo',
+          name: 'Hoje é domingo?',
+          content: 'Verificador se o dia de hoje é um domingo',
+        },
+      ],
+    }
+  },
   computed: {
     todayIsDomingo() {
       if (new Date().getDay() === 0) {
@@ -33,18 +45,6 @@ export default {
     },
   },
   methods: {},
-  head() {
-    return {
-      title: 'Hoje é domingo?',
-      meta: [
-        {
-          hid: 'Verificador se o dia de hoje é um domingo',
-          name: 'Hoje é domingo?',
-          content: 'Verificador se o dia de hoje é um domingo',
-        },
-      ],
-    }
-  },
 }
 </script>
 
