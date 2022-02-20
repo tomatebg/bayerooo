@@ -4,7 +4,7 @@
     :class="getGradientClass"
   >
     <div class="d-flex align-center">
-      <span class="font-weight-light text-h3 text-md-h2 mx-4 ml-md-0">
+      <span class="no-select font-weight-light text-h3 text-md-h2 mx-4 ml-md-0">
         {{ todayIsDomingo }}</span
       >
     </div>
