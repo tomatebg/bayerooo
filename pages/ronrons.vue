@@ -1,0 +1,194 @@
+<template>
+  <div class="gradient-container d-flex justify-center" :class="gradientClass">
+    <div class="d-flex align-center">
+      <a href="#" class="the-cat-click" @click="hasClicked = true">
+        <img
+          :src="catFromStore"
+          alt="Rogerio Bayer Logo"
+          class="the-cat-image ml-3 mt-1"
+      /></a>
+    </div>
+  </div>
+</template>
+
+<script>
+import { mapGetters, mapActions } from 'vuex'
+export default {
+  name: 'HomePage',
+  layout: 'ronrons',
+  data() {
+    return {
+      roundCondition: 0,
+      hasClicked: true,
+      intervalID: null,
+    }
+  },
+  head() {
+    return {
+      title: 'Ronrons',
+      meta: [
+        {
+          hid: 'Verificador se o dia de hoje é um domingo',
+          name: 'Hoje é domingo?',
+          content: 'Verificador se o dia de hoje é um domingo',
+        },
+      ],
+    }
+  },
+  mounted() {
+    this.repeatAfterSeconds()
+  },
+  computed: {
+    ...mapGetters(['currentCat']),
+    gradientClass() {
+      if (this.roundCondition === 1) {
+        return 'green-round-background'
+      } else if (this.roundCondition === 2) {
+        return 'red-round-background'
+      } else if (this.currentCat === 1) {
+        return 'orange-cat-gradient'
+      } else {
+        return 'mushu-cat-gradient'
+      }
+    },
+    catFromStore() {
+      if (this.currentCat === 1) {
+        return 'cat1.png'
+      } else {
+        return 'cat2.png'
+      }
+    },
+  },
+  methods: {
+    ...mapActions(['earnPoints', 'lostPoints']),
+    repeatAfterSeconds() {
+      const time = Math.round(Math.random() * 10000)
+      // tempo da repetição
+      // eslint-disable-next-line no-use-before-define
+      this.intervalID = setInterval(this.makeARound, time) // eslint-disable-line no-use-before-define
+    },
+    async makeARound() {
+      const time = Math.round(Math.random() * 1000)
+      // tempo do pisco
+      console.log(time)
+      Math.round(Math.random()) >= 0.5 // cor da rodada (1 = clicar 2= não clicar)
+        ? (this.roundCondition = 1)
+        : (this.roundCondition = 2)
+      await this.timeout(time + 200)
+      if ((this.roundCondition = 1 && this.hasClicked)) {
+        this.earnPoints()
+      } else if ((this.roundCondition = 2 && !this.hasClicked)) {
+        this.earnPoints()
+      } else {
+        this.lostPoints()
+      }
+      this.roundCondition = 0
+      this.hasClicked = false
+    },
+
+    timeout(ms) {
+      console.log(ms)
+      return new Promise((resolve) => setTimeout(resolve, ms))
+    },
+  },
+}
+</script>
+
+<style scoped>
+.no-select {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.orange-cat-gradient {
+  background: linear-gradient(270deg, #ff9122, #ffcc89);
+}
+
+.mushu-cat-gradient {
+  background: linear-gradient(270deg, #221c64, #44137b, #612797, #eaeaea);
+}
+
+.green-round-background {
+  background: linear-gradient(270deg, #0c8f43, #0c8f43);
+}
+
+.red-round-background {
+  background: linear-gradient(270deg, #8f0c0c, #8f0c0c);
+}
+
+.gradient-container {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+
+  background-size: 1400% 1400%;
+
+  -webkit-animation: GradientAnimation 10s ease infinite;
+  -moz-animation: GradientAnimation 10s ease infinite;
+  animation: GradientAnimation 10s ease infinite;
+}
+
+.the-cat-image {
+  width: 200px;
+  height: 200px;
+  animation-name: TheCatRotation;
+  animation-duration: 12s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  border-radius: 30%;
+}
+.the-cat-click {
+  border-radius: 50%;
+}
+.the-cat-click:active {
+  filter: contrast(1.5);
+}
+
+@keyframes TheCatRotation {
+  from {
+    transform: rotate(-360deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes GradientAnimation {
+  0% {
+    background-position: 93% 0%;
+  }
+  50% {
+    background-position: 0% 100%;
+  }
+  100% {
+    background-position: 93% 0%;
+  }
+}
+@-moz-keyframes GradientAnimation {
+  0% {
+    background-position: 93% 0%;
+  }
+  50% {
+    background-position: 0% 100%;
+  }
+  100% {
+    background-position: 93% 0%;
+  }
+}
+@keyframes GradientAnimation {
+  0% {
+    background-position: 93% 0%;
+  }
+  50% {
+    background-position: 0% 100%;
+  }
+  100% {
+    background-position: 93% 0%;
+  }
+}
+</style>

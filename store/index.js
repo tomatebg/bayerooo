@@ -1,0 +1,78 @@
+export const state = () => ({
+  ronronsGame: {
+    currentCat: 1,
+    remainingLifes: 3,
+    pointsEarned: 0,
+    pointsRecord: null,
+    playerName: null,
+  },
+})
+
+export const getters = {
+  currentCat: (state) => state.ronronsGame.currentCat,
+  pointsEarned: (state) => state.ronronsGame.pointsEarned,
+  pointsRecord: (state) => state.ronronsGame.pointsRecord,
+  remainingLifes: (state) => state.ronronsGame.remainingLifes,
+  playerName: (state) => state.ronronsGame.playerName,
+}
+
+export const mutations = {
+  SET_CURRENT_CAT: (state, payload) => {
+    state.ronronsGame.currentCat = payload
+  },
+  SET_POINTS_EARNED: (state, payload) => {
+    state.ronronsGame.pointsEarned = payload
+  },
+  SET_POINTS_RECORD: (state, payload) => {
+    state.ronronsGame.pointsRecord = payload
+  },
+  SET_REMAINING_LIFES: (state, payload) => {
+    state.ronronsGame.remainingLifes = payload
+  },
+  SET_PLAYER_NAME: (state, payload) => {
+    state.ronronsGame.playerName = payload
+  },
+}
+
+export const actions = {
+  switchCurrentCat({ commit, getters }) {
+    if (getters.currentCat === 1) {
+      commit('SET_CURRENT_CAT', 2)
+    } else {
+      commit('SET_CURRENT_CAT', 1)
+    }
+  },
+  earnPoints({ commit, getters }) {
+    commit('SET_POINTS_EARNED', getters.pointsEarned + 100)
+
+    if (getters.pointsEarned > getters.pointsRecord) {
+      commit('SET_POINTS_RECORD', getters.pointsEarned)
+    }
+  },
+  lostPoints({ commit, getters }) {
+    if (getters.pointsEarned > 100) {
+      commit('SET_POINTS_EARNED', Math.round(getters.pointsEarned / 2))
+    } else {
+      commit('SET_POINTS_EARNED', 0)
+    }
+  },
+
+  //   async getProducts({ commit, dispatch },{}) {
+  //     try {
+  //       const data = await this.$axios.get('products')
+  //       commit('SET_PRODUCTS', data.data.Items)
+  //       commit('SET_PRODUCTS', data.data.Items)
+  //     } catch (e) {
+  //       this.$toast.success(e, {
+  //         duration: 5000,
+  //       })
+  //     }
+  //   },
+}
+
+export default {
+  state,
+  getters,
+  mutations,
+  actions,
+}
