@@ -5,6 +5,10 @@
     <v-spacer></v-spacer>
     <span>{{ pointsEarned }} pontos</span>
 
+    <v-btn icon @click="clickOnDifficultIcon">
+      <v-icon>{{ difficultIcon }}</v-icon>
+    </v-btn>
+
     <v-btn icon @click="clickOnHeaderCat">
       <v-icon>mdi-cat</v-icon>
     </v-btn>
@@ -19,14 +23,26 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
+  computed: {
+    ...mapGetters(['pointsEarned', 'difficulty']),
+    difficultIcon() {
+      if (this.difficulty === 3000) {
+        return 'mdi-numeric-1-circle'
+      }
+      if (this.difficulty === 2000) {
+        return 'mdi-numeric-2-circle'
+      }
+      return 'mdi-numeric-3-circle'
+    },
+  },
   methods: {
-    ...mapActions(['switchCurrentCat']),
+    ...mapActions(['switchCurrentCat', 'switchDifficult']),
     clickOnHeaderCat() {
       this.switchCurrentCat()
     },
-  },
-  computed: {
-    ...mapGetters(['pointsEarned']),
+    clickOnDifficultIcon() {
+      this.switchDifficult()
+    },
   },
 }
 </script>
