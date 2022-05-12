@@ -1,6 +1,7 @@
 export const state = () => ({
   ronronsGame: {
     currentCat: 1,
+    difficulty: 3000,
     remainingLifes: 3,
     pointsEarned: 0,
     pointsRecord: null,
@@ -10,6 +11,7 @@ export const state = () => ({
 
 export const getters = {
   currentCat: (state) => state.ronronsGame.currentCat,
+  difficulty: (state) => state.ronronsGame.difficulty,
   pointsEarned: (state) => state.ronronsGame.pointsEarned,
   pointsRecord: (state) => state.ronronsGame.pointsRecord,
   remainingLifes: (state) => state.ronronsGame.remainingLifes,
@@ -19,6 +21,9 @@ export const getters = {
 export const mutations = {
   SET_CURRENT_CAT: (state, payload) => {
     state.ronronsGame.currentCat = payload
+  },
+  SET_DIFFICULTY: (state, payload) => {
+    state.ronronsGame.difficulty = payload
   },
   SET_POINTS_EARNED: (state, payload) => {
     state.ronronsGame.pointsEarned = payload
@@ -40,6 +45,16 @@ export const actions = {
       commit('SET_CURRENT_CAT', 2)
     } else {
       commit('SET_CURRENT_CAT', 1)
+    }
+  },
+
+  switchDifficult({ commit, getters }) {
+    if (getters.difficulty === 3000) {
+      commit('SET_DIFFICULTY', 2000)
+    } else if (getters.difficulty === 2000) {
+      commit('SET_DIFFICULTY', 1000)
+    } else {
+      commit('SET_DIFFICULTY', 3000)
     }
   },
   earnPoints({ commit, getters }) {
