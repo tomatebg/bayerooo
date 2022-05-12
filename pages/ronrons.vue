@@ -2,10 +2,7 @@
   <div class="gradient-container d-flex justify-center" :class="gradientClass">
     <div class="d-flex align-center">
       <a href="#" class="the-cat-click" @click="hasClicked = true">
-        <img
-          :src="catFromStore"
-          alt="Rogerio Bayer Logo"
-          class="the-cat-image ml-3 mt-1"
+        <img :src="catFromStore" alt="Gato" class="the-cat-image ml-3 mt-1"
       /></a>
     </div>
   </div>
@@ -39,17 +36,16 @@ export default {
     this.repeatAfterSeconds()
   },
   computed: {
-    ...mapGetters(['currentCat']),
+    ...mapGetters(['currentCat', 'difficulty']),
     gradientClass() {
-      if (this.roundCondition === 1) {
-        return 'green-round-background'
-      } else if (this.roundCondition === 2) {
-        return 'red-round-background'
-      } else if (this.currentCat === 1) {
-        return 'orange-cat-gradient'
-      } else {
-        return 'mushu-cat-gradient'
-      }
+      // if (this.roundCondition === 1) {
+      //   return 'green-round-background'
+      // } else if (this.roundCondition === 2) {
+      //   return 'red-round-background'
+      // } else if (this.currentCat === 1) {
+      //   return 'orange-cat-gradient'
+      // } else {
+      return 'pastel-gradient'
     },
     catFromStore() {
       if (this.currentCat === 1) {
@@ -62,19 +58,20 @@ export default {
   methods: {
     ...mapActions(['earnPoints', 'lostPoints']),
     repeatAfterSeconds() {
-      const time = Math.round(Math.random() * 10000)
+      console.log('time', this.difficulty * 1.5)
       // tempo da repetição
       // eslint-disable-next-line no-use-before-define
-      this.intervalID = setInterval(this.makeARound, time) // eslint-disable-line no-use-before-define
+      this.intervalID = setInterval(this.makeARound, this.difficulty * 1.5) // eslint-disable-line no-use-before-define
     },
     async makeARound() {
-      const time = Math.round(Math.random() * 1000)
+      // const time = Math.round(Math.random() * 1000)
+      console.log('timeround', this.difficulty / 3)
+
       // tempo do pisco
-      console.log(time)
       Math.round(Math.random()) >= 0.5 // cor da rodada (1 = clicar 2= não clicar)
         ? (this.roundCondition = 1)
         : (this.roundCondition = 2)
-      await this.timeout(time + 200)
+      await this.timeout(this.difficulty / 3)
       if ((this.roundCondition = 1 && this.hasClicked)) {
         this.earnPoints()
       } else if ((this.roundCondition = 2 && !this.hasClicked)) {
@@ -112,8 +109,42 @@ export default {
   background: linear-gradient(270deg, #221c64, #44137b, #612797, #eaeaea);
 }
 
+.pastel-gradient {
+  background: linear-gradient(
+    250deg,
+    #e3fcfc,
+    #e4d4dc,
+    #fce4e4,
+    #d4ecf4,
+    #e4ecd5,
+    #ccdce4,
+    #fce4dc,
+    #dbd5e3,
+    #cce4f4,
+    #fbe4ec,
+    #f4dcd4,
+    #fce0d4,
+    #e4d8e7,
+    #e3dcf4,
+    #fcdcdc,
+    #eff7d3,
+    #c4e7e0,
+    #f3d4db,
+    #f4d4c4,
+    #fcd8cc,
+    #fce4bc,
+    #c4f4f3,
+    #dcf4cc,
+    #f4dca4,
+    #c0eccc,
+    #c4f0c4,
+    #fceca4,
+    #fcdb94
+  );
+}
+
 .green-round-background {
-  background: linear-gradient(270deg, #0c8f43, #0c8f43);
+  background: linear-gradient(270deg, #0c8f43, , #0c8f43);
 }
 
 .red-round-background {
@@ -128,9 +159,9 @@ export default {
 
   background-size: 1400% 1400%;
 
-  -webkit-animation: GradientAnimation 10s ease infinite;
-  -moz-animation: GradientAnimation 10s ease infinite;
-  animation: GradientAnimation 10s ease infinite;
+  -webkit-animation: GradientAnimation 90s ease infinite;
+  -moz-animation: GradientAnimation 90s ease infinite;
+  animation: GradientAnimation 90s ease infinite;
 }
 
 .the-cat-image {
