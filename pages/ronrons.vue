@@ -2,7 +2,12 @@
   <div class="gradient-container d-flex justify-center" :class="gradientClass">
     <div class="d-flex align-center">
       <a href="#" class="the-cat-click" @click="hasClicked = true">
-        <img :src="catFromStore" alt="Gato" class="the-cat-image ml-3 mt-1"
+        <img
+          :src="catRound"
+          alt="Gato"
+          class="the-cat-image ml-3 mt-1"
+          :class="theCatVelocity"
+          draggable="false"
       /></a>
     </div>
   </div>
@@ -38,21 +43,23 @@ export default {
   computed: {
     ...mapGetters(['currentCat', 'difficulty']),
     gradientClass() {
-      // if (this.roundCondition === 1) {
-      //   return 'green-round-background'
-      // } else if (this.roundCondition === 2) {
-      //   return 'red-round-background'
-      // } else if (this.currentCat === 1) {
-      //   return 'orange-cat-gradient'
-      // } else {
       return 'pastel-gradient'
     },
-    catFromStore() {
-      if (this.currentCat === 1) {
-        return 'cat1.png'
-      } else {
-        return 'cat2.png'
+    catRound() {
+      if (this.roundCondition === 1) {
+        return 'yes-cat.png'
+      } else if (this.roundCondition === 2) {
+        return 'no-cat.png'
       }
+      return 'default-cat.png'
+    },
+    theCatVelocity() {
+      if (this.difficulty === 3000) {
+        return 'the-quiet-cat'
+      } else if (this.difficulty === 2000) {
+        return 'the-cat-in-hurry'
+      }
+      return 'the-cat-in-extreme-hurry'
     },
   },
   methods: {
@@ -164,11 +171,22 @@ export default {
   animation: GradientAnimation 90s ease infinite;
 }
 
+.the-quiet-cat {
+  animation-duration: 60s;
+}
+
+.the-cat-in-hurry {
+  animation-duration: 30s;
+}
+
+.the-cat-in-extreme-hurry {
+  animation-duration: 12s;
+}
+
 .the-cat-image {
   width: 200px;
   height: 200px;
   animation-name: TheCatRotation;
-  animation-duration: 12s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
   border-radius: 30%;
