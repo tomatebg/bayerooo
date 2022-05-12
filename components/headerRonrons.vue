@@ -9,9 +9,9 @@
       <v-icon>{{ difficultIcon }}</v-icon>
     </v-btn>
 
-    <v-btn icon @click="clickOnHeaderCat">
+    <!-- <v-btn icon @click="clickOnHeaderCat">
       <v-icon>mdi-cat</v-icon>
-    </v-btn>
+    </v-btn> -->
 
     <v-btn icon>
       <v-icon>mdi-podium-gold</v-icon>
