@@ -4,8 +4,9 @@ export const state = () => ({
     difficulty: 3000,
     remainingLifes: 3,
     pointsEarned: 0,
-    pointsRecord: null,
+    pointsRecord: 0,
     playerName: null,
+    isPaused: true,
   },
 })
 
@@ -16,6 +17,7 @@ export const getters = {
   pointsRecord: (state) => state.ronronsGame.pointsRecord,
   remainingLifes: (state) => state.ronronsGame.remainingLifes,
   playerName: (state) => state.ronronsGame.playerName,
+  isPaused: (state) => state.ronronsGame.isPaused,
 }
 
 export const mutations = {
@@ -37,9 +39,20 @@ export const mutations = {
   SET_PLAYER_NAME: (state, payload) => {
     state.ronronsGame.playerName = payload
   },
+  SET_PAUSED: (state, payload) => {
+    state.ronronsGame.isPaused = payload
+  },
 }
 
 export const actions = {
+  switchPause({ commit, getters }) {
+    if (getters.isPaused) {
+      commit('SET_PAUSED', false)
+    } else {
+      commit('SET_PAUSED', true)
+    }
+  },
+
   switchCurrentCat({ commit, getters }) {
     if (getters.currentCat === 1) {
       commit('SET_CURRENT_CAT', 2)
@@ -70,6 +83,9 @@ export const actions = {
     } else {
       commit('SET_POINTS_EARNED', 0)
     }
+  },
+  setUser({ commit, getters }, data) {
+    commit('SET_PLAYER_NAME', data.user)
   },
 
   //   async getProducts({ commit, dispatch },{}) {

@@ -10,33 +10,6 @@
           draggable="false"
       /></a>
     </div>
-
-    <v-snackbar
-      :timeout="difficulty - 500"
-      :value="true"
-      absolute
-      centered
-      top
-      color="deep-purple accent-4"
-      rounded="pill"
-      elevation="24"
-      class="mt-12"
-    >
-      snackbar with <strong>elevation: 24</strong> property.
-    </v-snackbar>
-
-    <v-snackbar
-      :value="true"
-      absolute
-      centered
-      botton
-      color="transparent"
-      rounded="pill"
-      elevation="24"
-      class="mt-12"
-    >
-      snackbar with <strong>elevation: 24</strong> property.
-    </v-snackbar>
   </div>
 </template>
 
@@ -48,7 +21,7 @@ export default {
   data() {
     return {
       roundCondition: 0,
-      hasClicked: true,
+      hasClicked: null,
       intervalID: null,
     }
   },
@@ -68,7 +41,7 @@ export default {
     this.repeatAfterSeconds()
   },
   computed: {
-    ...mapGetters(['currentCat', 'difficulty']),
+    ...mapGetters(['currentCat', 'difficulty', 'isPaused']),
     gradientClass() {
       return 'pastel-gradient'
     },
@@ -81,12 +54,15 @@ export default {
       return 'default-cat.png'
     },
     theCatVelocity() {
-      if (this.difficulty === 3000) {
-        return 'the-quiet-cat'
-      } else if (this.difficulty === 2000) {
-        return 'the-cat-in-hurry'
+      if (!this.isPaused) {
+        if (this.difficulty === 3000) {
+          return 'the-quiet-cat'
+        } else if (this.difficulty === 2000) {
+          return 'the-cat-in-hurry'
+        }
+        return 'the-cat-in-extreme-hurry'
       }
-      return 'the-cat-in-extreme-hurry'
+      return 'the-sleeping-cat'
     },
   },
   methods: {
@@ -102,19 +78,33 @@ export default {
       console.log('timeround', this.difficulty / 3)
 
       // tempo do pisco
-      Math.round(Math.random()) >= 0.5 // cor da rodada (1 = clicar 2= não clicar)
-        ? (this.roundCondition = 1)
-        : (this.roundCondition = 2)
-      await this.timeout(this.difficulty / 3)
-      if (this.roundCondition === 1 && this.hasClicked) {
-        this.earnPoints()
-      } else if (this.roundCondition === 2 && !this.hasClicked) {
-        this.earnPoints()
-      } else {
-        this.lostPoints()
+      if (!this.isPaused) {
+        Math.round(Math.random()) >= 0.5 // cor da rodada (1 = clicar 2= não clicar)
+          ? (this.roundCondition = 1)
+          : (this.roundCondition = 2)
+        await this.timeout(this.difficulty / 3)
+        if (this.roundCondition === 1 && this.hasClicked) {
+          this.earnPoints()
+          this.$toast.success('Você acertou! :)', {
+            duration: this.difficulty - 500,
+            theme: 'bubble',
+          })
+        } else if (this.roundCondition === 2 && !this.hasClicked) {
+          this.earnPoints()
+          this.$toast.success('Você acertou! :)', {
+            duration: this.difficulty - 500,
+            theme: 'bubble',
+          })
+        } else {
+          this.lostPoints()
+          this.$toast.error('Você errou :(', {
+            duration: this.difficulty - 500,
+            theme: 'bubble',
+          })
+        }
+        this.roundCondition = 0
+        this.hasClicked = false
       }
-      this.roundCondition = 0
-      this.hasClicked = false
     },
 
     timeout(ms) {
@@ -196,6 +186,10 @@ export default {
   -webkit-animation: GradientAnimation 90s ease infinite;
   -moz-animation: GradientAnimation 90s ease infinite;
   animation: GradientAnimation 90s ease infinite;
+}
+
+.the-sleeping-cat {
+  animation-duration: 0s;
 }
 
 .the-quiet-cat {
