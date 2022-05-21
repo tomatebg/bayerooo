@@ -3,7 +3,7 @@
     <v-card>
       <v-card-title>
         <img
-          src="default-cat.png"
+          src="https://d33wubrfki0l68.cloudfront.net/6b1c5c45aa28e7a604fc9e0de40ee378747693d7/46a22/default-cat.png"
           alt="Gato"
           class="the-cat-image-ranking mr-3"
           draggable="false"
