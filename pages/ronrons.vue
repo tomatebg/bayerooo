@@ -51,7 +51,7 @@ export default {
       } else if (this.roundCondition === 2) {
         return 'https://d33wubrfki0l68.cloudfront.net/524a9448e0ef6a844bf8b3adfbc42cfcc852a929/efbce/no-cat.png'
       }
-      return 'default-cat.png'
+      return 'https://d33wubrfki0l68.cloudfront.net/6b1c5c45aa28e7a604fc9e0de40ee378747693d7/46a22/default-cat.png'
     },
     theCatVelocity() {
       if (!this.isPaused) {
