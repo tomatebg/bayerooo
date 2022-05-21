@@ -1,13 +1,26 @@
 <template>
   <v-dialog v-model="dialog" persistent max-width="600px">
     <v-card>
-      <img
-        src="default-cat.png"
-        alt="Gato"
-        class="the-cat-image-dialog ma-4 mb-0"
-        draggable="false"
-      />
-
+      <div>
+        <img
+          src="default-cat.png"
+          alt="Gato"
+          class="the-cat-image-dialog ma-4 mb-0"
+          draggable="false"
+        />
+        <img
+          src="no-cat.png"
+          alt="Gato"
+          class="the-cat-image-dialog ma-4 mb-0"
+          draggable="false"
+        />
+        <img
+          src="yes-cat.png"
+          alt="Gato"
+          class="the-cat-image-dialog ma-4 mb-0"
+          draggable="false"
+        />
+      </div>
       <v-card-title>
         <span class="text-h5">Bem vindo ao Ronrons!</span>
       </v-card-title>
