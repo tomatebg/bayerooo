@@ -47,9 +47,9 @@ export default {
     },
     catRound() {
       if (this.roundCondition === 1) {
-        return 'yes-cat.png'
+        return 'https://d33wubrfki0l68.cloudfront.net/1f05809cc92136e63bee2138e769f00c55060b07/cd5bf/yes-cat.png'
       } else if (this.roundCondition === 2) {
-        return 'no-cat.png'
+        return 'https://d33wubrfki0l68.cloudfront.net/524a9448e0ef6a844bf8b3adfbc42cfcc852a929/efbce/no-cat.png'
       }
       return 'default-cat.png'
     },
