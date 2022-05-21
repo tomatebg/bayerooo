@@ -57,12 +57,7 @@ export default {
   },
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    proxy: true,
-    prefix: '/v1/',
-  },
-
-  proxy: {
-    '/v1/': { target: 'https://ronrons-api.web.app' },
+    baseURL: 'https://ronrons-api.web.app/v1/', // Used as fallback if no runtime config is provided
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
